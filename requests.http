@@ -1,0 +1,39 @@
+### 1. Create an item (POST) -> expect 201
+# @name createItem
+POST http://localhost:3000/api/items
+Content-Type: application/json
+
+{
+  "title": "Buy milk"
+}
+
+### 2. Get all items (GET) -> expect 200
+GET http://localhost:3000/api/items
+
+### 3. Get one item (GET) -> expect 200
+GET http://localhost:3000/api/items/{{createItem.response.body._id}}
+
+### 4. Update the item (PUT) -> expect 200
+PUT http://localhost:3000/api/items/{{createItem.response.body._id}}
+Content-Type: application/json
+
+{
+  "completed": true
+}
+
+### 5. Get the item again to see the change (GET) -> expect 200
+GET http://localhost:3000/api/items/{{createItem.response.body._id}}
+
+### 6. Delete the item (DELETE) -> expect 200
+DELETE http://localhost:3000/api/items/{{createItem.response.body._id}}
+
+### 7. Get the deleted item (GET) -> expect 404
+GET http://localhost:3000/api/items/{{createItem.response.body._id}}
+
+### 8. Bad data (POST with no title) -> expect 400
+POST http://localhost:3000/api/items
+Content-Type: application/json
+
+{
+  "completed": true
+}
